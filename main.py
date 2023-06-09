@@ -46,14 +46,14 @@ def get_db():
 
 
 @app.post("/users", tags=['users'])
-async def create_user_rest(user_data: UserCreate):
+async def create_user_route(user_data: UserCreate):
     with get_db() as db:
         result = create_user(db, user_data)
         return result
 
 
 @app.post("/record", tags=["records"])
-async def create_record_rest(record_data: AudioRecordCreate = Depends(AudioRecordCreate)):
+async def create_record_route(record_data: AudioRecordCreate = Depends(AudioRecordCreate)):
     with get_db() as db:
 
         try:
@@ -69,7 +69,7 @@ async def create_record_rest(record_data: AudioRecordCreate = Depends(AudioRecor
 
 
 @app.get("/record", tags=["records"])
-def download_audio_record(record_id: str, user_id: str):
+def download_record_route(record_id: str, user_id: str):
     with get_db() as db:
         audio_record = get_record(db=db, user_id=user_id, record_id=record_id)
         mp3_path = f"audio_files/{audio_record.file_path}"
