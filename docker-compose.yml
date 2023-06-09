@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  database:
+    image: postgres
+    volumes:
+      - ./mounts/db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: w2m_db
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
